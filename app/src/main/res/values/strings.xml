@@ -1,0 +1,44 @@
+<resources>
+    <string name="app_name">Expense Tracker</string>
+    <string name="sign_in_your_account">Sign-in your account</string>
+    <string name="delete_account">Delete Account</string>
+    <string name="logout">logout</string>
+    <string name="register">register</string>
+    <string name="lick_to_login">lick_to_login</string>
+    <string name="signuppassword">signUppassword</string>
+    <string name="email_address">email_address</string>
+    <string name="home_profile_icon">home_profile_icon</string>
+    <string name="login">login</string>
+    <string name="email">email</string>
+    <string name="password">password</string>
+    <string name="you_don_t_have_an_account">You don\'t have an account?</string>
+    <string name="profile_icons">profile_icons</string>
+    <string name="last_name">last name</string>
+    <string name="signup_email_address">email address</string>
+    <string name="signup_password">password</string>
+    <string name="re_type_password">re-type password</string>
+    <string name="click_to_login">click to login</string>
+    <string name="sign_up">sign up</string>
+    <string name="add_note">add_note</string>
+    <string name="backbtn">backbtn</string>
+    <string name="back">Back</string>
+    <string name="add_new_note">Add New Note</string>
+    <string name="done">done</string>
+    <string name="title">Title</string>
+    <string name="description">Description</string>
+    <string name="notes">Notes</string>
+    <string name="note_title">Expense Name</string>
+    <string name="description_item">Amount</string>
+    <string name="note_title_item">Expense Date</string>
+    <string name="first_name">first name</string>
+    <string name="confirm_password">confirm password</string>
+    <string name="already_have_an_account">Already have an Account?</string>
+    <string name="log_in">Log in</string>
+    <string name="signup_your_account">Sign up</string>
+    <string name="welcome_back">Welcome Back to Note</string>
+    <string name="note">Note</string>
+    <string name="human">Save</string>
+    <string name="expense_name">Expense Name</string>
+
+
+</resources>
