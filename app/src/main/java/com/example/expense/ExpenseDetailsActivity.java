@@ -19,12 +19,12 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.DocumentReference;
 
-public class NoteDetailsActivity extends AppCompatActivity {
-        EditText titleEditText, descriptionEditText;
-        ImageButton deleteNote;
-        Button saveNote;
+public class ExpenseDetailsActivity extends AppCompatActivity {
+        EditText titleEditText, amountEditText;
+        ImageButton delete_expense;
+        Button save;
         TextView titleText;
-        String title, description, noteId;
+        String title, amount, expenseId;
         Boolean isEditMode = false;
         ImageView backbtn;
 
@@ -36,59 +36,59 @@ public class NoteDetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_note_details);
 
 
-        titleEditText = findViewById(R.id.note_title);
-        descriptionEditText = findViewById(R.id.note_description);
-        saveNote = findViewById(R.id.note_save);
+        titleEditText = findViewById(R.id.expense_title);
+        amountEditText = findViewById(R.id.amount);
+        save = findViewById(R.id.expense_save);
         titleText = findViewById(R.id.title_textView);
-        deleteNote = findViewById(R.id.note_delete);
+        delete_expense = findViewById(R.id.note_delete);
         backbtn = findViewById(R.id.back_btn);
         backbtn.setOnClickListener(v -> {
-            Intent intent = new Intent(NoteDetailsActivity.this, MainActivity.class);
+            Intent intent = new Intent(ExpenseDetailsActivity.this, MainActivity.class);
             startActivity(intent);
         });
 
 
         title = getIntent().getStringExtra("expense");
-        description = getIntent().getStringExtra("amount");
-        noteId = getIntent().getStringExtra("docId");
-        if (noteId != null && !noteId.isEmpty()) {
+        amount = getIntent().getStringExtra("amount");
+        expenseId = getIntent().getStringExtra("docId");
+        if (expenseId != null && !expenseId.isEmpty()) {
             isEditMode = true;
         }
 
         titleEditText.setText(title);
-        descriptionEditText.setText(description);
+        amountEditText.setText(amount);
         if (isEditMode) {
             titleText.setText("Edit Your Expense");
-            deleteNote.setVisibility(View.VISIBLE);
+            delete_expense.setVisibility(View.VISIBLE);
         }
 
 
-        saveNote.setOnClickListener((v) -> saveNote());
-        deleteNote.setOnClickListener((v) -> deleteNoteFromFirebase());
+        save.setOnClickListener((v) -> saveNote());
+        delete_expense.setOnClickListener((v) -> deleteNoteFromFirebase());
     }
 
 
 
     private void saveNote() {
         String noteTitle = titleEditText.getText().toString();
-        String noteDescription = descriptionEditText.getText().toString();
+        String noteDescription = amountEditText.getText().toString();
 
-        Note note = new Note();
-        note.setTitle(noteTitle);
-        note.setDescription(noteDescription);
-        note.setTimestamp(Timestamp.now());
-        saveNoteToFirebase(note);
+        Expense expense = new Expense();
+        expense.setTitle(noteTitle);
+        expense.setAmount(noteDescription);
+        expense.setTimestamp(Timestamp.now());
+        saveNoteToFirebase(expense);
         if (noteTitle.isEmpty()) {
             return;
         }
 
     }
 
-    void saveNoteToFirebase(Note note) {
+    void saveNoteToFirebase(Expense expense) {
         DocumentReference documentReference = null;
 
         if (isEditMode) {
-            documentReference = Utility.getCollectionReferenceForNotes().document(noteId);
+            documentReference = Utility.getCollectionReferenceForNotes().document(expenseId);
 
         }else{
             documentReference = Utility.getCollectionReferenceForNotes().document();
@@ -96,15 +96,15 @@ public class NoteDetailsActivity extends AppCompatActivity {
 
 
 
-        documentReference.set(note).addOnCompleteListener(new OnCompleteListener<Void>() {
+        documentReference.set(expense).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()){
-                    Utility.showToast(NoteDetailsActivity.this, "Expense added successfully");
-                    Intent intent = new Intent(NoteDetailsActivity.this, MainActivity.class);
+                    Utility.showToast(ExpenseDetailsActivity.this, "Expense added successfully");
+                    Intent intent = new Intent(ExpenseDetailsActivity.this, MainActivity.class);
                     startActivity(intent);
                 }else{
-                    Utility.showToast(NoteDetailsActivity.this, "Failed while adding Expense");
+                    Utility.showToast(ExpenseDetailsActivity.this, "Failed while adding Expense");
 
                 }
             }
@@ -112,22 +112,22 @@ public class NoteDetailsActivity extends AppCompatActivity {
     }
     private void deleteNoteFromFirebase() {
         // Show a confirmation dialog before deleting the note
-        new AlertDialog.Builder(NoteDetailsActivity.this)
+        new AlertDialog.Builder(ExpenseDetailsActivity.this)
                 .setTitle("Delete Expense")
                 .setMessage("Are you sure you want to delete this Expense record?")
                 .setPositiveButton("Yes", (dialog, which) -> {
                     // Proceed with deleting the note
-                    DocumentReference documentReference = Utility.getCollectionReferenceForNotes().document(noteId);
+                    DocumentReference documentReference = Utility.getCollectionReferenceForNotes().document(expenseId);
                     documentReference.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             if (task.isSuccessful()) {
-                                Utility.showToast(NoteDetailsActivity.this, "Expense Deleted Successfully");
-                                Intent intent = new Intent(NoteDetailsActivity.this, MainActivity.class);
+                                Utility.showToast(ExpenseDetailsActivity.this, "Expense Deleted Successfully");
+                                Intent intent = new Intent(ExpenseDetailsActivity.this, MainActivity.class);
                                 startActivity(intent);
                                 finish();
                             } else {
-                                Utility.showToast(NoteDetailsActivity.this, "Failed while Deleting Expense record");
+                                Utility.showToast(ExpenseDetailsActivity.this, "Failed while Deleting Expense record");
                             }
                         }
                     });

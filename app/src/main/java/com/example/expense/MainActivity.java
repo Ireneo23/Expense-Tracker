@@ -34,36 +34,36 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        addNote.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, NoteDetailsActivity.class)));
+        addNote.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, ExpenseDetailsActivity.class)));
         setupRecyclerView();
     }
 
     void setupRecyclerView() {
         Query query = Utility.getCollectionReferenceForNotes().orderBy("timestamp", Query.Direction.DESCENDING);
-        FirestoreRecyclerOptions<Note> options = new FirestoreRecyclerOptions.Builder<Note>()
-                .setQuery(query, Note.class).build();
+        FirestoreRecyclerOptions<Expense> options = new FirestoreRecyclerOptions.Builder<Expense>()
+                .setQuery(query, Expense.class).build();
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        NoteAdapter noteAdapter = new NoteAdapter(options, this);
-        recyclerView.setAdapter(noteAdapter);
+        ExpenseAdapter expenseAdapter = new ExpenseAdapter(options, this);
+        recyclerView.setAdapter(expenseAdapter);
     }
     @Override
     protected void onStart() {
         super.onStart();
-        NoteAdapter adapter = (NoteAdapter) recyclerView.getAdapter();
+        ExpenseAdapter adapter = (ExpenseAdapter) recyclerView.getAdapter();
         adapter.startListening();
 
     }
     @Override
     protected void onStop() {
         super.onStop();
-        NoteAdapter adapter = (NoteAdapter) recyclerView.getAdapter();
+        ExpenseAdapter adapter = (ExpenseAdapter) recyclerView.getAdapter();
         adapter.stopListening();
 
     }
     @Override
     protected void onResume() {
         super.onResume();
-        NoteAdapter adapter = (NoteAdapter) recyclerView.getAdapter();
+        ExpenseAdapter adapter = (ExpenseAdapter) recyclerView.getAdapter();
         adapter.notifyDataSetChanged();
 
     }

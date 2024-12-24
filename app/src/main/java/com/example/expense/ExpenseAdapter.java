@@ -13,27 +13,27 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 
-public class NoteAdapter extends FirestoreRecyclerAdapter<Note, NoteAdapter.NoteViewHolder> {
+public class ExpenseAdapter extends FirestoreRecyclerAdapter<Expense, ExpenseAdapter.NoteViewHolder> {
     Context context;
 
 
 
 
-    public NoteAdapter(@NonNull FirestoreRecyclerOptions<Note> options, Context context) {
+    public ExpenseAdapter(@NonNull FirestoreRecyclerOptions<Expense> options, Context context) {
         super(options);
         this.context = context;
     }
 
     @Override
-    protected void onBindViewHolder(@NonNull NoteViewHolder holder, int position, @NonNull Note note) {
-    holder.title.setText(note.title);
-    holder.description.setText(note.description);
-    holder.timestamp.setText(Utility.timestampToString(note.timestamp));
+    protected void onBindViewHolder(@NonNull NoteViewHolder holder, int position, @NonNull Expense expense) {
+    holder.title.setText(expense.title);
+    holder.amount.setText(expense.amount);
+    holder.timestamp.setText(Utility.timestampToString(expense.timestamp));
 
     holder.itemView.setOnClickListener((v) -> {
-        Intent intent = new Intent(context, NoteDetailsActivity.class);
-        intent.putExtra("expense", note.title);
-        intent.putExtra("amount", note.description);
+        Intent intent = new Intent(context, ExpenseDetailsActivity.class);
+        intent.putExtra("expense", expense.title);
+        intent.putExtra("amount", expense.amount);
         String docId = this.getSnapshots().getSnapshot(position).getId();
         intent.putExtra("docId", docId);
         context.startActivity(intent);
@@ -50,13 +50,13 @@ public class NoteAdapter extends FirestoreRecyclerAdapter<Note, NoteAdapter.Note
     }
 
     class NoteViewHolder extends RecyclerView.ViewHolder {
-        TextView title, description, timestamp;
+        TextView title, amount, timestamp;
 
 
         public NoteViewHolder(@NonNull View itemView) {
             super(itemView);
             title = itemView.findViewById(R.id.text_recycler_view_item);
-            description = itemView.findViewById(R.id.description_recycler_view_item);
+            amount = itemView.findViewById(R.id.amount_recycler_view_item);
             timestamp = itemView.findViewById(R.id.timestamp_recycler_view_item);
 
         }

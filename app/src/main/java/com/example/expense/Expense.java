@@ -2,9 +2,9 @@ package com.example.expense;
 
 import com.google.firebase.Timestamp;
 
-public class Note {
+public class Expense {
     String title;
-    String description;
+    String amount;
     Timestamp timestamp;
 
     public String getTitle() {
@@ -15,12 +15,12 @@ public class Note {
         this.title = title;
     }
 
-    public String getDescription() {
-        return description;
+    public String getAmount() {
+        return amount;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setAmount(String amount) {
+        this.amount = amount;
     }
 
     public Timestamp getTimestamp() {
@@ -31,7 +31,7 @@ public class Note {
         this.timestamp = timestamp;
     }
 
-    public Note() {
+    public Expense() {
 
     }
 }
